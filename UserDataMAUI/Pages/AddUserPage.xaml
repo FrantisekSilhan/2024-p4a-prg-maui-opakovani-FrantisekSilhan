@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UserDataMAUI.Pages.AddUserPage"
+             Title="AddUserPage">
+    <StackLayout>
+        <Entry Placeholder="New User Username" Text="{Binding NewUserUsername}"></Entry>
+        <Entry Placeholder="New User Password" Text="{Binding NewUserPassword}" IsPassword="True"></Entry>
+        <Button Text="Add New User" Command="{Binding AddNewUserCommand}"></Button>
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+    </StackLayout>
+</ContentPage>

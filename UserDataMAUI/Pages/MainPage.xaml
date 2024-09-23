@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UserDataMAUI.Pages.MainPage"
+             xmlns:converters="clr-namespace:UserDataMAUI.Converters"
+             Title="MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+            <converters:NullToInverseBooleanConverter x:Key="NullToInverseBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout Padding="10">
+            <Button Text="Logout" Command="{Binding LogoutCommand}"></Button>
+            <StackLayout IsVisible="{Binding SelectedItem, Converter={StaticResource NullToBooleanConverter}}">
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!-- ID -->
+                    <Label Text="ID:" Grid.Column="0" Margin="0,0,10,0" />
+                    <Label Text="{Binding SelectedItem.ID}" Grid.Column="1" />
+
+                    <!-- Title -->
+                    <Label Text="Title:" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" />
+                    <Label Text="{Binding SelectedItem.Title}" Grid.Row="1" Grid.Column="1" />
+
+                    <!-- Description -->
+                    <Label Text="Description:" Grid.Row="2" Grid.Column="0" Margin="0,0,10,0" />
+                    <Label Text="{Binding SelectedItem.Description}" Grid.Row="2" Grid.Column="1" />
+
+                    <!-- Author -->
+                    <Label Text="Author:" Grid.Row="3" Grid.Column="0" Margin="0,0,10,0"  />
+                    <Label Text="{Binding SelectedItem.Author}" Grid.Row="3" Grid.Column="1" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Remove" Grid.Column="0" Command="{Binding RemoveItemCommand}"></Button>
+                    <Button Text="Close" Grid.Column="1" Command="{Binding CloseItemCommand}"></Button>
+                </Grid>
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding Items}" ItemTapped="ListView_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1" Text="{Binding Title}"></Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" />
+            <Entry Placeholder="Title" Text="{Binding Title}"></Entry>
+            <Editor 
+                Placeholder="Enter description here..." 
+                Text="{Binding Description}" 
+                AutoSize="TextChanges" 
+                HeightRequest="100" />
+            <Button Text="Add" Command="{Binding AddCommand}" IsVisible="{Binding SelectedItem, Converter={StaticResource NullToInverseBooleanConverter}}"></Button>
+            <Button Text="Save Changes" Command="{Binding EditItemCommand}" IsVisible="{Binding SelectedItem, Converter={StaticResource NullToBooleanConverter}}"></Button>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
